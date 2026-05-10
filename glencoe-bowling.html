@@ -1,0 +1,1420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>The Glencoe Club — Bowling Reservations</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --navy:        #0d1f3c;
+  --navy-deep:   #081429;
+  --navy-mid:    #152b52;
+  --navy-light:  #1e3a6e;
+  --gold:        #c9a84c;
+  --gold-light:  #e2c97e;
+  --gold-dim:    #8a6f2e;
+  --cream:       #f7f3ec;
+  --cream-dark:  #ede7da;
+  --white:       #ffffff;
+  --text-main:   #0d1f3c;
+  --text-muted:  #6b7a8d;
+  --success:     #2a7a4b;
+  --success-bg:  #eaf5ee;
+  --error:       #8b2020;
+  --error-bg:    #fdf0f0;
+  --warn:        #7a5a00;
+  --warn-bg:     #fdf8e8;
+  --radius:      6px;
+  --shadow-sm:   0 2px 8px rgba(13,31,60,0.10);
+  --shadow-md:   0 6px 24px rgba(13,31,60,0.16);
+  --shadow-lg:   0 16px 48px rgba(13,31,60,0.22);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Jost', sans-serif;
+  background: var(--cream);
+  color: var(--text-main);
+  min-height: 100vh;
+}
+
+/* ─── HEADER ─── */
+header {
+  background: var(--navy-deep);
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.4);
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+}
+.logo-block {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.logo-crest {
+  width: 44px;
+  height: 44px;
+}
+.logo-text-block { line-height: 1; }
+.logo-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--white);
+  letter-spacing: 0.06em;
+}
+.logo-sub {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.62rem;
+  color: var(--gold);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+.header-right {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.72rem;
+  color: var(--gold-light);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+
+/* ─── HERO BAND ─── */
+.hero {
+  background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy-mid) 60%, #1a3560 100%);
+  padding: 52px 24px 44px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c9a84c' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.hero-eyebrow {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 14px;
+  position: relative;
+}
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 300;
+  color: var(--white);
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  position: relative;
+}
+.hero h1 em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+.hero-rule {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin: 20px auto;
+  position: relative;
+}
+.hero-sub {
+  font-family: 'Libre Baskerville', serif;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.65);
+  font-style: italic;
+  position: relative;
+}
+
+/* ─── LAYOUT ─── */
+.page-body {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 32px;
+  align-items: start;
+}
+@media(max-width: 800px) {
+  .page-body { grid-template-columns: 1fr; }
+  .sidebar { order: -1; }
+}
+
+/* ─── SECTION TITLE ─── */
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: 0.02em;
+  margin-bottom: 4px;
+}
+.section-sub {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+/* ─── CARD ─── */
+.card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 28px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(201,168,76,0.12);
+}
+.card-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--navy);
+  border-bottom: 1px solid var(--cream-dark);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.card-title .step-badge {
+  width: 22px; height: 22px;
+  background: var(--gold);
+  color: var(--navy-deep);
+  border-radius: 50%;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Jost', sans-serif;
+  flex-shrink: 0;
+}
+
+/* ─── FORM ELEMENTS ─── */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.form-row.full { grid-template-columns: 1fr; }
+@media(max-width:500px) { .form-row { grid-template-columns: 1fr; } }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+input, select {
+  border: 1px solid var(--cream-dark);
+  border-radius: var(--radius);
+  padding: 10px 13px;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.92rem;
+  color: var(--navy);
+  background: var(--cream);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+input:focus, select:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.12);
+  background: #fff;
+}
+input.error-field { border-color: var(--error); }
+select { cursor: pointer; }
+
+/* ─── GAME TYPE TOGGLE ─── */
+.game-toggle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.game-btn {
+  border: 2px solid var(--cream-dark);
+  background: var(--cream);
+  border-radius: var(--radius);
+  padding: 14px 10px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+  font-family: 'Jost', sans-serif;
+}
+.game-btn:hover { border-color: var(--gold-dim); }
+.game-btn.active {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, #fffdf5, #fdf7e4);
+  box-shadow: 0 2px 12px rgba(201,168,76,0.2);
+}
+.game-btn.disabled-type {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.game-btn .game-icon { font-size: 1.5rem; margin-bottom: 4px; }
+.game-btn .game-name {
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--navy);
+  letter-spacing: 0.06em;
+}
+.game-btn .game-note {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+/* ─── LANE GRID ─── */
+.lane-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+.pair-block {
+  background: var(--cream);
+  border-radius: var(--radius);
+  padding: 12px 14px;
+  border: 1px solid var(--cream-dark);
+}
+.pair-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+.pair-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.pair-status-tag {
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+.tag-free { background: #e6f5ec; color: #2a7a4b; }
+.tag-10pin { background: #e8f0fb; color: #1a4f9c; }
+.tag-5pin { background: #fdf3e8; color: #8b5a00; }
+.tag-full { background: #fde8e8; color: #8b2020; }
+.tag-locked { background: var(--warn-bg); color: var(--warn); }
+
+.lane-row { display: flex; gap: 8px; }
+.lane-btn {
+  flex: 1;
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  padding: 11px 8px;
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  text-align: center;
+  transition: all 0.18s;
+  position: relative;
+  overflow: hidden;
+}
+.lane-btn .lane-num {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--navy);
+  display: block;
+}
+.lane-btn .lane-status {
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 2px;
+  display: block;
+}
+
+/* States */
+.lane-available {
+  background: #fff;
+  border-color: var(--cream-dark);
+}
+.lane-available:hover {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, #fffdf5, #fdf7e4);
+}
+.lane-selected {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, #fdf7e4, #faf0d0);
+  box-shadow: 0 2px 12px rgba(201,168,76,0.25);
+}
+.lane-selected .lane-num { color: var(--gold-dim); }
+.lane-booked {
+  background: #fde8e8;
+  border-color: #c87070;
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+.lane-booked .lane-num { color: #8b2020; }
+.lane-booked .lane-status { color: #8b2020; }
+.lane-conflict {
+  background: #f5f5f5;
+  border-color: #d0d0d0;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+.lane-conflict .lane-num { color: #999; }
+.lane-conflict .lane-status { color: #aaa; }
+.lane-available .lane-status { color: var(--success); }
+.lane-selected .lane-status { color: var(--gold-dim); }
+.lane-forced {
+  background: #fff;
+  border-color: var(--cream-dark);
+}
+.lane-forced:hover {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, #fffdf5, #fdf7e4);
+}
+.lane-forced .lane-status { color: var(--text-muted); }
+
+/* ─── ALERTS ─── */
+.alert {
+  border-radius: var(--radius);
+  padding: 13px 16px;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+.alert-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+.alert-error { background: var(--error-bg); color: var(--error); border-left: 3px solid var(--error); }
+.alert-warn { background: var(--warn-bg); color: var(--warn); border-left: 3px solid #c9a84c; }
+.alert-success { background: var(--success-bg); color: var(--success); border-left: 3px solid var(--success); }
+.alert-info { background: #edf2fb; color: #1a4f9c; border-left: 3px solid #4a7fd4; }
+.alert strong { display: block; font-weight: 600; margin-bottom: 3px; }
+
+/* ─── BUTTONS ─── */
+.btn-primary {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, var(--navy), var(--navy-light));
+  color: var(--gold-light);
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: var(--shadow-sm);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--navy-light), #264f8a);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+.btn-primary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+.btn-gold {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  background: linear-gradient(135deg, var(--gold-dim), var(--gold));
+  color: var(--navy-deep);
+  border: none;
+  border-radius: var(--radius);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 10px;
+}
+.btn-gold:hover {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  box-shadow: 0 4px 16px rgba(201,168,76,0.4);
+  transform: translateY(-1px);
+}
+.btn-link {
+  background: none; border: none;
+  color: var(--gold-dim); font-family: 'Jost', sans-serif;
+  font-size: 0.78rem; cursor: pointer; text-decoration: underline;
+  padding: 0; margin-top: 10px; display: inline-block;
+  letter-spacing: 0.04em;
+}
+
+/* ─── DURATION PILLS ─── */
+.duration-pills {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+}
+.dur-pill {
+  border: 1.5px solid var(--cream-dark);
+  background: var(--cream);
+  border-radius: 20px;
+  padding: 6px 16px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--navy);
+  cursor: pointer;
+  font-family: 'Jost', sans-serif;
+  transition: all 0.15s;
+}
+.dur-pill:hover { border-color: var(--gold-dim); }
+.dur-pill.active {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, #fffdf5, #fdf7e4);
+  color: var(--gold-dim);
+  font-weight: 600;
+}
+
+/* ─── SIDEBAR ─── */
+.sidebar {}
+.summary-card {
+  background: linear-gradient(160deg, var(--navy-deep), var(--navy-mid));
+  border-radius: var(--radius);
+  padding: 26px;
+  color: var(--white);
+  box-shadow: var(--shadow-md);
+  position: sticky;
+  top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+.summary-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: var(--gold-light);
+  border-bottom: 1px solid rgba(201,168,76,0.25);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+}
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 13px;
+  font-size: 0.83rem;
+}
+.sum-label {
+  color: rgba(255,255,255,0.5);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+.sum-val {
+  font-weight: 400;
+  color: var(--white);
+  text-align: right;
+  font-size: 0.88rem;
+  max-width: 60%;
+}
+.sum-val.empty { color: rgba(255,255,255,0.28); font-style: italic; font-size: 0.8rem; }
+.sum-val.highlight { color: var(--gold-light); font-weight: 600; }
+
+.legend-block {
+  background: var(--white);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(201,168,76,0.12);
+  box-shadow: var(--shadow-sm);
+}
+.legend-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+  font-size: 0.8rem;
+  color: var(--navy);
+}
+.legend-dot {
+  width: 12px; height: 12px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+/* ─── CONFIRMATION MODAL ─── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(8,20,41,0.75);
+  display: none;
+  align-items: center; justify-content: center;
+  z-index: 200;
+  padding: 20px;
+  backdrop-filter: blur(3px);
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 36px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: var(--shadow-lg);
+  animation: slideUp 0.25s ease;
+}
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+.modal-crest {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 300;
+  text-align: center;
+  color: var(--navy);
+  margin-bottom: 6px;
+}
+.modal-sub {
+  text-align: center;
+  font-family: 'Libre Baskerville', serif;
+  font-style: italic;
+  font-size: 0.83rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+.confirm-details {
+  background: var(--cream);
+  border-radius: var(--radius);
+  padding: 18px;
+  margin-bottom: 24px;
+}
+.confirm-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--cream-dark);
+}
+.confirm-row:last-child { margin-bottom: 0; padding-bottom: 0; border: none; }
+.confirm-label { color: var(--text-muted); font-size: 0.75rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.confirm-val { font-weight: 600; color: var(--navy); }
+.conf-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  color: var(--gold-dim);
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.1em;
+  margin: 10px 0 6px;
+}
+.conf-hint { font-size: 0.73rem; color: var(--text-muted); text-align: center; }
+
+/* ─── BOOKINGS TABLE ─── */
+.bookings-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+.bookings-table th {
+  text-align: left;
+  font-size: 0.63rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--cream-dark);
+  font-weight: 500;
+}
+.bookings-table td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--cream-dark);
+  color: var(--navy);
+}
+.bookings-table tr:last-child td { border-bottom: none; }
+.game-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+.badge-10 { background: #e8f0fb; color: #1a4f9c; }
+.badge-5  { background: #fdf3e8; color: #8b5a00; }
+
+/* ─── DIVIDER ─── */
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 30px 0;
+  opacity: 0.4;
+}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:600px) {
+  .card { padding: 20px; }
+  .modal { padding: 24px; }
+  .summary-card { position: static; }
+  header { padding: 0; }
+  .hero { padding: 36px 16px 30px; }
+}
+
+/* ─── FADE IN ─── */
+.fade-in {
+  animation: fadeIn 0.4s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="logo-block">
+      <!-- SVG crest (simplified Glencoe-style) -->
+      <svg class="logo-crest" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect width="44" height="44" rx="4" fill="#0d1f3c"/>
+        <!-- diagonal cross -->
+        <line x1="4" y1="4" x2="40" y2="40" stroke="#c9a84c" stroke-width="1.5" opacity="0.5"/>
+        <line x1="40" y1="4" x2="4" y2="40" stroke="#c9a84c" stroke-width="1.5" opacity="0.5"/>
+        <!-- mountains -->
+        <polyline points="6,34 14,18 22,28 30,14 38,34" fill="none" stroke="#c9a84c" stroke-width="1.8" stroke-linejoin="round"/>
+        <!-- torch flame -->
+        <ellipse cx="22" cy="8" rx="3" ry="4" fill="#c9a84c" opacity="0.9"/>
+        <rect x="21" y="10" width="2" height="5" fill="#c9a84c" opacity="0.7"/>
+        <!-- border -->
+        <rect x="1" y="1" width="42" height="42" rx="3" stroke="#c9a84c" stroke-width="0.8" opacity="0.4"/>
+      </svg>
+      <div class="logo-text-block">
+        <div class="logo-name">The Glencoe Club</div>
+        <div class="logo-sub">Established 1931 · Calgary</div>
+      </div>
+    </div>
+    <div class="header-right">Bowling Reservations</div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-eyebrow">Member Services</div>
+  <h1>Reserve Your <em>Lane</em></h1>
+  <div class="hero-rule"></div>
+  <div class="hero-sub">5-Pin & 10-Pin · All ten lanes · Real-time availability</div>
+</div>
+
+<!-- MAIN BODY -->
+<div class="page-body">
+
+  <!-- LEFT COLUMN: BOOKING FORM -->
+  <div class="main-col">
+
+    <!-- STEP 1: MEMBER + DATE -->
+    <div class="card fade-in" id="step1-card">
+      <div class="card-title"><span class="step-badge">1</span> Member & Date</div>
+
+      <div class="form-row full">
+        <div class="field">
+          <label for="memberId">Member Number</label>
+          <input type="text" id="memberId" placeholder="e.g. GC-10482" maxlength="12"/>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field">
+          <label for="bookDate">Date</label>
+          <input type="date" id="bookDate"/>
+        </div>
+        <div class="field">
+          <label for="bookTime">Start Time</label>
+          <select id="bookTime">
+            <option value="">— Select time —</option>
+            <option>09:00 AM</option>
+            <option>09:30 AM</option>
+            <option>10:00 AM</option>
+            <option>10:30 AM</option>
+            <option>11:00 AM</option>
+            <option>11:30 AM</option>
+            <option>12:00 PM</option>
+            <option>12:30 PM</option>
+            <option>01:00 PM</option>
+            <option>01:30 PM</option>
+            <option>02:00 PM</option>
+            <option>02:30 PM</option>
+            <option>03:00 PM</option>
+            <option>03:30 PM</option>
+            <option>04:00 PM</option>
+            <option>04:30 PM</option>
+            <option>05:00 PM</option>
+            <option>05:30 PM</option>
+            <option>06:00 PM</option>
+            <option>06:30 PM</option>
+            <option>07:00 PM</option>
+            <option>07:30 PM</option>
+            <option>08:00 PM</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field" style="margin-bottom:20px">
+        <label>Duration</label>
+        <div class="duration-pills">
+          <button class="dur-pill" data-dur="30">30 min</button>
+          <button class="dur-pill active" data-dur="60">1 hour</button>
+          <button class="dur-pill" data-dur="90">1.5 hrs</button>
+          <button class="dur-pill" data-dur="120">2 hours</button>
+          <button class="dur-pill" data-dur="150">2.5 hrs</button>
+          <button class="dur-pill" data-dur="180">3 hours</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Number of Players <span style="font-weight:300;text-transform:none;letter-spacing:0">(max 6)</span></label>
+        <select id="numPlayers">
+          <option value="1">1 player</option>
+          <option value="2">2 players</option>
+          <option value="3">3 players</option>
+          <option value="4" selected>4 players</option>
+          <option value="5">5 players</option>
+          <option value="6">6 players</option>
+        </select>
+        <div style="font-size:0.73rem;color:var(--text-muted);margin-top:5px;">
+          🥿 Rental bowling shoes are always complimentary — available at the Bowling Centre desk.
+        </div>
+      </div>
+
+      <div class="alert alert-info" style="margin-top:18px;margin-bottom:0">
+        <span class="alert-icon">📧</span>
+        <div><strong>Group or Event Booking?</strong> For events, leagues, or groups larger than 6, please contact our Bowling Centre team at <a href="mailto:example@gmail.com" style="color:inherit;font-weight:600;">example@gmail.com</a></div>
+      </div>
+    </div>
+
+    <!-- STEP 2: GAME TYPE -->
+    <div class="card fade-in" style="animation-delay:0.07s">
+      <div class="card-title"><span class="step-badge">2</span> Game Type</div>
+      <div class="game-toggle" id="gameToggle">
+        <button class="game-btn active" data-game="10pin" onclick="selectGame('10pin')">
+          <div class="game-icon">🎳</div>
+          <div class="game-name">10-Pin</div>
+          <div class="game-note">Standard bowling</div>
+        </button>
+        <button class="game-btn" data-game="5pin" onclick="selectGame('5pin')">
+          <div class="game-icon">🎯</div>
+          <div class="game-name">5-Pin</div>
+          <div class="game-note">Canadian classic</div>
+        </button>
+      </div>
+    </div>
+
+    <!-- STEP 3: LANE SELECTION -->
+    <div class="card fade-in" style="animation-delay:0.14s">
+      <div class="card-title"><span class="step-badge">3</span> Select a Lane</div>
+
+      <div class="lane-grid" id="laneGrid"></div>
+
+      <div id="lane-alert"></div>
+    </div>
+
+    <!-- STEP 4: NOTES + SUBMIT -->
+    <div class="card fade-in" style="animation-delay:0.2s">
+      <div class="card-title"><span class="step-badge">4</span> Special Requests</div>
+
+      <div class="form-row full" style="margin-bottom:8px">
+        <div class="field">
+          <label for="notes">Notes (optional)</label>
+          <input type="text" id="notes" placeholder="e.g. Birthday celebration, bumpers for kids, etc."/>
+        </div>
+      </div>
+
+      <div id="submit-alert"></div>
+
+      <button class="btn-gold" onclick="submitBooking()">Confirm Reservation</button>
+      <button class="btn-link" onclick="resetForm()">Clear & Start Over</button>
+    </div>
+
+    <!-- EXISTING BOOKINGS DISPLAY -->
+    <div class="card fade-in" style="animation-delay:0.25s" id="bookings-card">
+      <div class="card-title">Today's Mock Reservations <span style="font-size:0.7rem;font-weight:400;color:var(--text-muted);font-family:'Jost',sans-serif;margin-left:auto">Pre-loaded for demo</span></div>
+      <table class="bookings-table" id="bookingsTable"></table>
+    </div>
+
+  </div>
+
+  <!-- RIGHT COLUMN: SIDEBAR -->
+  <div class="sidebar">
+
+    <div class="summary-card">
+      <div class="summary-title">Booking Summary</div>
+      <div class="summary-row">
+        <div class="sum-label">Member</div>
+        <div class="sum-val" id="sum-member"><span class="empty">Not entered</span></div>
+      </div>
+      <div class="summary-row">
+        <div class="sum-label">Date</div>
+        <div class="sum-val" id="sum-date"><span class="empty">Not selected</span></div>
+      </div>
+      <div class="summary-row">
+        <div class="sum-label">Time</div>
+        <div class="sum-val" id="sum-time"><span class="empty">Not selected</span></div>
+      </div>
+      <div class="summary-row">
+        <div class="sum-label">Duration</div>
+        <div class="sum-val" id="sum-dur"><span class="empty">Not selected</span></div>
+      </div>
+      <div class="summary-row">
+        <div class="sum-label">Game Type</div>
+        <div class="sum-val highlight" id="sum-game">10-Pin</div>
+      </div>
+      <div class="summary-row">
+        <div class="sum-label">Lane</div>
+        <div class="sum-val highlight" id="sum-lane"><span class="empty">Not selected</span></div>
+      </div>
+      <div class="summary-row">
+        <div class="sum-label">Pair</div>
+        <div class="sum-val" id="sum-pair"><span class="empty">—</span></div>
+      </div>
+      <div class="summary-row">
+        <div class="sum-label">Players</div>
+        <div class="sum-val" id="sum-players">4</div>
+      </div>
+    </div>
+
+    <div style="height:16px"></div>
+
+    <div class="legend-block">
+      <div class="legend-title">Lane Status Legend</div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#fff;border:2px solid var(--cream-dark)"></div> Available
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:linear-gradient(135deg,#fdf7e4,#faf0d0);border:2px solid var(--gold)"></div> Your selection
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#fde8e8;border:2px solid #c87070"></div> Booked
+      </div>
+      <div class="legend-item">
+        <div class="legend-dot" style="background:#f5f5f5;border:2px solid #d0d0d0"></div> Unavailable at this time
+      </div>
+    </div>
+
+    <div class="legend-block">
+      <div class="legend-title">Good to Know</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);line-height:1.7;">
+        🥿 <strong>Shoes:</strong> Complimentary rental shoes available at the desk.<br>
+        👥 <strong>Groups 7+:</strong> Email <a href="mailto:example@gmail.com" style="color:var(--gold-dim);">example@gmail.com</a> for event bookings.<br>
+        ⏱️ <strong>Arrival:</strong> Please arrive 10 minutes before your start time.
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CONFIRMATION MODAL -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="modal">
+    <div class="modal-crest">
+      <svg width="40" height="40" viewBox="0 0 44 44" fill="none">
+        <rect width="44" height="44" rx="4" fill="#0d1f3c"/>
+        <line x1="4" y1="4" x2="40" y2="40" stroke="#c9a84c" stroke-width="1.5" opacity="0.5"/>
+        <line x1="40" y1="4" x2="4" y2="40" stroke="#c9a84c" stroke-width="1.5" opacity="0.5"/>
+        <polyline points="6,34 14,18 22,28 30,14 38,34" fill="none" stroke="#c9a84c" stroke-width="1.8" stroke-linejoin="round"/>
+        <ellipse cx="22" cy="8" rx="3" ry="4" fill="#c9a84c" opacity="0.9"/>
+        <rect x="21" y="10" width="2" height="5" fill="#c9a84c" opacity="0.7"/>
+      </svg>
+    </div>
+    <div class="modal-title">Reservation Confirmed</div>
+    <div class="modal-sub">Your lane has been successfully reserved.</div>
+    <div class="confirm-details" id="confirmDetails"></div>
+    <div class="conf-num" id="confNum"></div>
+    <div class="conf-hint">Please quote your confirmation number at the Bowling Centre desk.</div>
+    <button class="btn-gold" onclick="closeModal()" style="margin-top:20px">Make Another Booking</button>
+  </div>
+</div>
+
+<script>
+// ─── DATA MODEL ───────────────────────────────────────────────────────────────
+
+// 5 pairs × 2 lanes = 10 lanes
+const PAIRS = [
+  { id: 'A', lanes: [1, 2], label: 'Pair A' },
+  { id: 'B', lanes: [3, 4], label: 'Pair B' },
+  { id: 'C', lanes: [5, 6], label: 'Pair C' },
+  { id: 'D', lanes: [7, 8], label: 'Pair D' },
+  { id: 'E', lanes: [9,10], label: 'Pair E' },
+];
+
+function getPair(laneNum) {
+  return PAIRS.find(p => p.lanes.includes(laneNum));
+}
+function getPartner(laneNum) {
+  const pair = getPair(laneNum);
+  return pair.lanes.find(l => l !== laneNum);
+}
+
+// ─── TIME UTILITIES ───────────────────────────────────────────────────────────
+// Convert "10:00 AM" → minutes-since-midnight (integer)
+function timeToMins(t) {
+  if (!t) return null;
+  const [timePart, period] = t.split(' ');
+  let [h, m] = timePart.split(':').map(Number);
+  if (period === 'PM' && h !== 12) h += 12;
+  if (period === 'AM' && h === 12) h = 0;
+  return h * 60 + m;
+}
+
+// Do two slots overlap? [startA, startA+durA) vs [startB, startB+durB)
+// Uses half-open intervals so back-to-back (e.g. 10-11 then 11-12) does NOT overlap.
+function slotsOverlap(startA, durA, startB, durB) {
+  const endA = startA + durA;
+  const endB = startB + durB;
+  return startA < endB && startB < endA;
+}
+
+// ─── MOCK BOOKINGS ────────────────────────────────────────────────────────────
+// All times are for TODAY (date-agnostic for demo — date field is UI only).
+// Carefully designed to showcase every scenario:
+//
+//  Pair A (Lanes 1 & 2):
+//    Lane 1 → 10-Pin 10:00–11:00   ← user selecting 10AM will see Lane 1 booked
+//    Lane 2 → free all day          ← at 10AM, pair is 10-Pin-locked (lane 2 shows "10-Pin only")
+//                                      at 12PM, pair is free (both lanes open for any type)
+//
+//  Pair B (Lanes 3 & 4):
+//    Lane 3 → 5-Pin  11:00–12:30   ← demonstrates pair lock for 5-pin
+//    Lane 4 → 5-Pin  11:00–12:00
+//    At 11AM: both booked, pair locked to 5-Pin
+//    At 01PM: both free again
+//
+//  Pair C (Lanes 5 & 6):
+//    Completely free → always available, any type
+//
+//  Pair D (Lanes 7 & 8):
+//    Lane 7 → 10-Pin 02:00–04:00
+//    Lane 8 → free
+//    At 02PM: Lane 7 booked, Lane 8 pair-locked to 10-Pin
+//    At 04PM: both free
+//
+//  Pair E (Lanes 9 & 10):
+//    Lane 9  → 10-Pin 03:00–04:00
+//    Lane 10 → 5-Pin  05:00–06:00
+//    At 03PM: Lane 9 booked 10-Pin, Lane 10 free → pair locked 10-Pin (lane 10 = 10-Pin only)
+//    At 05PM: Lane 9 free, Lane 10 booked 5-Pin → pair locked 5-Pin (lane 9 = 5-Pin only)
+//    At 04PM: Both free, no lock → any type available on both lanes
+//    This is the KEY demo: same pair, different times, different game locks
+//
+let mockBookings = [
+  { id:'B001', memberNum:'GC-10021', name:'James Whitmore',   lane:1,  game:'10pin', time:'10:00 AM', duration:60,  players:4 },
+  { id:'B002', memberNum:'GC-10055', name:'Sarah Nakamura',   lane:3,  game:'5pin',  time:'11:00 AM', duration:90,  players:2 },
+  { id:'B003', memberNum:'GC-10099', name:'David Okafor',     lane:4,  game:'5pin',  time:'11:00 AM', duration:60,  players:3 },
+  { id:'B004', memberNum:'GC-10133', name:'Elena Vasquez',    lane:7,  game:'10pin', time:'02:00 PM', duration:120, players:4 },
+  { id:'B005', memberNum:'GC-10210', name:'Robert MacDonald', lane:9,  game:'10pin', time:'03:00 PM', duration:60,  players:6 },
+  { id:'B006', memberNum:'GC-10310', name:'Patricia Chen',    lane:10, game:'5pin',  time:'05:00 PM', duration:60,  players:2 },
+];
+
+// State
+let selectedGame     = '10pin';
+let selectedLane     = null;
+let selectedDuration = 60;
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+
+window.onload = function() {
+  const d = new Date();
+  document.getElementById('bookDate').value = d.toISOString().split('T')[0];
+  document.getElementById('bookTime').value = '10:00 AM';
+
+  renderLaneGrid();
+  renderBookingsTable();
+  bindSummaryListeners();
+
+  document.querySelectorAll('.dur-pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.dur-pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      selectedDuration = parseInt(btn.dataset.dur);
+      selectedLane = null; // deselect — duration change may create new overlaps
+      renderLaneGrid();
+      updateSummary();
+    });
+  });
+};
+
+// ─── CORE AVAILABILITY LOGIC ──────────────────────────────────────────────────
+
+/**
+ * Returns all bookings that overlap with the requested [wantStart, wantStart+wantDur).
+ * These are the only bookings that matter for the current time slot.
+ */
+function getConflictingBookings(wantStart, wantDur) {
+  return mockBookings.filter(b => {
+    const bStart = timeToMins(b.time);
+    return slotsOverlap(wantStart, wantDur, bStart, b.duration);
+  });
+}
+
+/**
+ * For a specific lane at the requested time slot:
+ * Returns: { booked: bool, game: '10pin'|'5pin'|null, booking: obj|null }
+ */
+function getLaneStatusAtTime(laneNum, wantStart, wantDur) {
+  const overlapping = getConflictingBookings(wantStart, wantDur);
+  const booking = overlapping.find(b => b.lane === laneNum);
+  if (booking) return { booked: true, game: booking.game, booking };
+  return { booked: false, game: null, booking: null };
+}
+
+/**
+ * For a pair at the requested time slot:
+ * Returns the game type the pair is locked to, or null if both lanes are free.
+ * A pair is locked if ANY lane in it has an overlapping booking.
+ * Both lanes could have bookings — they MUST be the same game type (enforced at write time).
+ */
+function getPairLockedGameAtTime(pairId, wantStart, wantDur) {
+  const pair = PAIRS.find(p => p.id === pairId);
+  for (const laneNum of pair.lanes) {
+    const s = getLaneStatusAtTime(laneNum, wantStart, wantDur);
+    if (s.booked) return s.game;
+  }
+  return null;
+}
+
+// ─── LANE GRID RENDER ─────────────────────────────────────────────────────────
+
+function getRequestedSlot() {
+  const timeVal = document.getElementById('bookTime').value;
+  const start   = timeToMins(timeVal);
+  const dur     = selectedDuration;
+  return { start, dur, valid: start !== null };
+}
+
+function renderLaneGrid() {
+  const grid = document.getElementById('laneGrid');
+  grid.innerHTML = '';
+  const slot = getRequestedSlot();
+
+  for (const pair of PAIRS) {
+    const lockedGame = slot.valid
+      ? getPairLockedGameAtTime(pair.id, slot.start, slot.dur)
+      : null;
+
+    let tagHTML = '';
+    if (!slot.valid) {
+      tagHTML = `<span class="pair-status-tag tag-free">Select time to check</span>`;
+    } else if (!lockedGame) {
+      tagHTML = `<span class="pair-status-tag tag-free">Open · Both types</span>`;
+    } else if (lockedGame === '10pin') {
+      tagHTML = `<span class="pair-status-tag tag-10pin">10-Pin only at this time</span>`;
+    } else {
+      tagHTML = `<span class="pair-status-tag tag-5pin">5-Pin only at this time</span>`;
+    }
+
+    const block = document.createElement('div');
+    block.className = 'pair-block';
+    block.innerHTML = `
+      <div class="pair-header">
+        <span class="pair-label">${pair.label} — Lanes ${pair.lanes[0]} & ${pair.lanes[1]}</span>
+        ${tagHTML}
+      </div>
+      <div class="lane-row" id="lane-row-${pair.id}"></div>
+    `;
+    grid.appendChild(block);
+
+    const row = block.querySelector(`#lane-row-${pair.id}`);
+
+    for (const laneNum of pair.lanes) {
+      const status = slot.valid
+        ? getLaneStatusAtTime(laneNum, slot.start, slot.dur)
+        : { booked: false, game: null };
+
+      const isSelected = selectedLane === laneNum;
+      const btn = document.createElement('button');
+      btn.className = 'lane-btn';
+
+      if (!slot.valid) {
+        btn.className += ' lane-conflict';
+        btn.innerHTML = `<span class="lane-num">Lane ${laneNum}</span><span class="lane-status">Select time first</span>`;
+        btn.disabled = true;
+
+      } else if (status.booked) {
+        // Red — booked at this time slot
+        btn.className += ' lane-booked';
+        btn.innerHTML = `<span class="lane-num">Lane ${laneNum}</span><span class="lane-status">Booked</span>`;
+        btn.disabled = true;
+
+      } else if (lockedGame && lockedGame !== selectedGame) {
+        // Partner booked with different type — show what type IS available
+        btn.className += ' lane-conflict';
+        btn.innerHTML = `<span class="lane-num">Lane ${laneNum}</span><span class="lane-status">${lockedGame === '10pin' ? '10-Pin' : '5-Pin'} only</span>`;
+        btn.title = `Switch to ${lockedGame === '10pin' ? '10-Pin' : '5-Pin'} in Step 2 to book this lane`;
+        btn.disabled = true;
+
+      } else if (isSelected) {
+        btn.className += ' lane-selected';
+        const gameLabel = lockedGame ? (lockedGame === '10pin' ? '10-Pin' : '5-Pin') : (selectedGame === '10pin' ? '10-Pin' : '5-Pin');
+        btn.innerHTML = `<span class="lane-num">Lane ${laneNum}</span><span class="lane-status">Selected · ${gameLabel}</span>`;
+        btn.onclick = () => { selectedLane = null; renderLaneGrid(); updateSummary(); };
+
+      } else {
+        // Available — single button, respects game type from Step 2
+        btn.className += ' lane-available';
+        const gameLabel = lockedGame ? (lockedGame === '10pin' ? '10-Pin' : '5-Pin') : (selectedGame === '10pin' ? '10-Pin' : '5-Pin');
+        btn.innerHTML = `<span class="lane-num">Lane ${laneNum}</span><span class="lane-status">Available · ${gameLabel}</span>`;
+        btn.onclick = () => {
+          if (lockedGame) {
+            // Auto-set game type to match pair lock when clicking
+            selectedGame = lockedGame;
+            document.querySelectorAll('.game-btn').forEach(b => b.classList.toggle('active', b.dataset.game === lockedGame));
+            document.getElementById('sum-game').textContent = lockedGame === '10pin' ? '10-Pin' : '5-Pin';
+          }
+          selectLane(laneNum);
+        };
+      }
+
+      row.appendChild(btn);
+    }
+  }
+}
+
+// ─── INTERACTIONS ─────────────────────────────────────────────────────────────
+
+function selectGame(game) {
+  selectedGame = game;
+  selectedLane = null; // changing game type clears lane — it may now be incompatible
+
+  document.querySelectorAll('.game-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.game === game);
+  });
+
+  document.getElementById('sum-game').textContent = game === '10pin' ? '10-Pin' : '5-Pin';
+  renderLaneGrid();
+  clearLaneAlert();
+  updateSummary();
+}
+
+function selectLane(laneNum) {
+  selectedLane = laneNum;
+  clearLaneAlert();
+  renderLaneGrid();
+  updateSummary();
+}
+
+function showLaneAlert(type, msg) {
+  document.getElementById('lane-alert').innerHTML =
+    `<div class="alert alert-${type}"><span class="alert-icon">${type==='warn'?'⚠️':type==='error'?'❌':type==='success'?'✅':'ℹ️'}</span><div>${msg}</div></div>`;
+}
+function clearLaneAlert() {
+  document.getElementById('lane-alert').innerHTML = '';
+}
+
+// ─── SUMMARY ──────────────────────────────────────────────────────────────────
+
+function bindSummaryListeners() {
+  document.getElementById('memberId').addEventListener('input', updateSummary);
+  document.getElementById('bookDate').addEventListener('change', updateSummary);
+  document.getElementById('numPlayers').addEventListener('change', updateSummary);
+  document.getElementById('bookTime').addEventListener('change', () => {
+    selectedLane = null;
+    renderLaneGrid();
+    updateSummary();
+  });
+}
+function updateSummary() {
+  const mid     = document.getElementById('memberId').value.trim();
+  const date    = document.getElementById('bookDate').value;
+  const time    = document.getElementById('bookTime').value;
+  const players = document.getElementById('numPlayers').value;
+
+  setSum('sum-member', mid || null);
+  setSum('sum-date',   date ? formatDate(date) : null);
+  setSum('sum-time',   time || null);
+  setSum('sum-dur',    selectedDuration ? formatDur(selectedDuration) : null);
+  document.getElementById('sum-players').textContent = players;
+
+  if (selectedLane) {
+    document.getElementById('sum-lane').innerHTML = `Lane ${selectedLane}`;
+    const pair = getPair(selectedLane);
+    document.getElementById('sum-pair').innerHTML = `${pair.label} (Lanes ${pair.lanes.join(' & ')})`;
+  } else {
+    setSum('sum-lane', null);
+    document.getElementById('sum-pair').innerHTML = `<span class="empty">—</span>`;
+  }
+}
+
+function setSum(id, val) {
+  const el = document.getElementById(id);
+  if (val) el.innerHTML = val;
+  else el.innerHTML = `<span class="empty">Not selected</span>`;
+}
+function formatDate(s) {
+  const d = new Date(s + 'T00:00:00');
+  return d.toLocaleDateString('en-CA', {weekday:'short',month:'long',day:'numeric',year:'numeric'});
+}
+function formatDur(m) {
+  if (m < 60) return `${m} minutes`;
+  if (m % 60 === 0) return `${m/60} hour${m/60>1?'s':''}`;
+  return `${Math.floor(m/60)}h ${m%60}m`;
+}
+
+// ─── SUBMIT ───────────────────────────────────────────────────────────────────
+
+function submitBooking() {
+  const alertEl = document.getElementById('submit-alert');
+  alertEl.innerHTML = '';
+
+  const mid     = document.getElementById('memberId').value.trim();
+  const date    = document.getElementById('bookDate').value;
+  const time    = document.getElementById('bookTime').value;
+  const players = document.getElementById('numPlayers').value;
+  const notes   = document.getElementById('notes').value.trim();
+
+  const errors = [];
+  if (!mid)          errors.push('Member number is required.');
+  if (!date)         errors.push('Please select a date.');
+  if (!time)         errors.push('Please select a start time.');
+  if (!selectedLane) errors.push('Please select a lane.');
+
+  if (errors.length) {
+    alertEl.innerHTML = `<div class="alert alert-error"><span class="alert-icon">❌</span><div><strong>Please fix the following:</strong><br>${errors.join('<br>')}</div></div>`;
+    return;
+  }
+
+  // Re-check conflict at submit time using proper time-overlap (safety guard)
+  const slot = getRequestedSlot();
+  const laneStatus = getLaneStatusAtTime(selectedLane, slot.start, slot.dur);
+  if (laneStatus.booked) {
+    alertEl.innerHTML = `<div class="alert alert-error"><span class="alert-icon">❌</span><div><strong>Lane no longer available.</strong> Lane ${selectedLane} was just reserved at this time. Please select another lane.</div></div>`;
+    renderLaneGrid();
+    return;
+  }
+  const pairLock = getPairLockedGameAtTime(getPair(selectedLane).id, slot.start, slot.dur);
+  if (pairLock && pairLock !== selectedGame) {
+    alertEl.innerHTML = `<div class="alert alert-error"><span class="alert-icon">❌</span><div><strong>Game Type Conflict — Booking Blocked.</strong> The other lane in this pair is reserved for <strong>${pairLock === '10pin' ? '10-Pin' : '5-Pin'}</strong> at this time. Please switch game type or choose a different lane.</div></div>`;
+    return;
+  }
+
+  // Create booking
+  const newId = 'B' + String(mockBookings.length + 1).padStart(3,'0');
+  const newBooking = {
+    id: newId,
+    memberNum: mid,
+    lane: selectedLane,
+    game: selectedGame,
+    time,
+    duration: selectedDuration,
+    players: parseInt(players),
+    notes,
+  };
+  mockBookings.push(newBooking);
+
+  // Show confirmation modal
+  const pair = getPair(selectedLane);
+  document.getElementById('confirmDetails').innerHTML = `
+    <div class="confirm-row"><span class="confirm-label">Member #</span><span class="confirm-val">${mid}</span></div>
+    <div class="confirm-row"><span class="confirm-label">Date</span><span class="confirm-val">${formatDate(date)}</span></div>
+    <div class="confirm-row"><span class="confirm-label">Time</span><span class="confirm-val">${time} · ${formatDur(selectedDuration)}</span></div>
+    <div class="confirm-row"><span class="confirm-label">Lane</span><span class="confirm-val">Lane ${selectedLane} (${pair.label})</span></div>
+    <div class="confirm-row"><span class="confirm-label">Game</span><span class="confirm-val">${selectedGame === '10pin' ? '🎳 10-Pin' : '🎯 5-Pin'}</span></div>
+    <div class="confirm-row"><span class="confirm-label">Players</span><span class="confirm-val">${players}</span></div>
+    ${notes ? `<div class="confirm-row"><span class="confirm-label">Notes</span><span class="confirm-val">${notes}</span></div>` : ''}
+  `;
+  document.getElementById('confNum').textContent = newId;
+  document.getElementById('confirmModal').classList.add('open');
+
+  // Refresh grid and table
+  renderLaneGrid();
+  renderBookingsTable();
+}
+
+function closeModal() {
+  document.getElementById('confirmModal').classList.remove('open');
+  resetForm();
+}
+
+function resetForm() {
+  selectedLane = null;
+  selectedGame = '10pin';
+  selectedDuration = 60;
+
+  document.getElementById('memberId').value = '';
+  document.getElementById('bookTime').value = '10:00 AM';
+  document.getElementById('notes').value = '';
+  document.getElementById('numPlayers').value = '4';
+  document.getElementById('submit-alert').innerHTML = '';
+  document.getElementById('lane-alert').innerHTML = '';
+
+  document.querySelectorAll('.game-btn').forEach(b => b.classList.toggle('active', b.dataset.game === '10pin'));
+  document.querySelectorAll('.dur-pill').forEach(b => b.classList.toggle('active', b.dataset.dur === '60'));
+
+  renderLaneGrid();
+  updateSummary();
+}
+
+// ─── BOOKINGS TABLE ───────────────────────────────────────────────────────────
+
+function renderBookingsTable() {
+  const table = document.getElementById('bookingsTable');
+  table.innerHTML = `
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Member #</th>
+        <th>Lane</th>
+        <th>Pair</th>
+        <th>Type</th>
+        <th>Time</th>
+        <th>Duration</th>
+        <th>Players</th>
+      </tr>
+    </thead>
+    <tbody>
+      ${mockBookings.map(b => {
+        const pair = getPair(b.lane);
+        return `
+          <tr>
+            <td><strong>${b.id}</strong></td>
+            <td>${b.memberNum}</td>
+            <td><strong>Lane ${b.lane}</strong></td>
+            <td>${pair.label}</td>
+            <td><span class="game-badge ${b.game === '10pin' ? 'badge-10' : 'badge-5'}">${b.game === '10pin' ? '10-Pin' : '5-Pin'}</span></td>
+            <td>${b.time}</td>
+            <td>${formatDur(b.duration)}</td>
+            <td>${b.players}</td>
+          </tr>
+        `;
+      }).join('')}
+    </tbody>
+  `;
+}
+</script>
+</body>
+</html>
