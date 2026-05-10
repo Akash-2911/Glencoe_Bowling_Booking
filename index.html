@@ -90,6 +90,12 @@ header {
   text-transform: uppercase;
   opacity: 0.8;
 }
+@media(max-width: 500px) {
+  .header-right { display: none; }
+  .logo-name { font-size: 1.1rem; }
+  .logo-sub { font-size: 0.55rem; }
+  .logo-crest { width: 36px; height: 36px; }
+}
 
 /* ─── HERO BAND ─── */
 .hero {
@@ -148,13 +154,20 @@ header {
   margin: 0 auto;
   padding: 40px 20px 80px;
   display: grid;
-  grid-template-columns: 1fr 360px;
+  grid-template-columns: 1fr 340px;
   gap: 32px;
   align-items: start;
 }
-@media(max-width: 800px) {
-  .page-body { grid-template-columns: 1fr; }
-  .sidebar { order: -1; }
+@media(max-width: 860px) {
+  .page-body {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    order: 2; /* always below form on mobile/tablet */
+  }
+  .main-col {
+    order: 1;
+  }
 }
 
 /* ─── SECTION TITLE ─── */
@@ -492,17 +505,18 @@ select { cursor: pointer; }
 }
 
 /* ─── SIDEBAR ─── */
-.sidebar {}
+.sidebar {
+  position: sticky;
+  top: 80px;
+}
+
 .summary-card {
   background: linear-gradient(160deg, var(--navy-deep), var(--navy-mid));
   border-radius: var(--radius);
   padding: 26px;
   color: var(--white);
   box-shadow: var(--shadow-md);
-  position: sticky;
-  top: 80px;
-  max-height: calc(100vh - 100px);
-  overflow-y: auto;
+  margin-bottom: 16px;
 }
 .summary-title {
   font-family: 'Cormorant Garamond', serif;
@@ -678,12 +692,17 @@ select { cursor: pointer; }
 }
 
 /* ─── RESPONSIVE ─── */
-@media(max-width:600px) {
+@media(max-width: 860px) {
+  .sidebar {
+    position: static;
+    max-height: none;
+    overflow-y: visible;
+  }
   .card { padding: 20px; }
   .modal { padding: 24px; }
-  .summary-card { position: static; }
   header { padding: 0; }
   .hero { padding: 36px 16px 30px; }
+  .page-body { padding: 24px 16px 60px; }
 }
 
 /* ─── FADE IN ─── */
@@ -908,8 +927,6 @@ select { cursor: pointer; }
         <div class="sum-val" id="sum-players">4</div>
       </div>
     </div>
-
-    <div style="height:16px"></div>
 
     <div class="legend-block">
       <div class="legend-title">Lane Status Legend</div>
