@@ -90,12 +90,6 @@ header {
   text-transform: uppercase;
   opacity: 0.8;
 }
-@media(max-width: 500px) {
-  .header-right { display: none; }
-  .logo-name { font-size: 1.1rem; }
-  .logo-sub { font-size: 0.55rem; }
-  .logo-crest { width: 36px; height: 36px; }
-}
 
 /* ─── HERO BAND ─── */
 .hero {
@@ -158,17 +152,6 @@ header {
   gap: 32px;
   align-items: start;
 }
-@media(max-width: 860px) {
-  .page-body {
-    grid-template-columns: 1fr;
-  }
-  .sidebar {
-    order: 2; /* always below form on mobile/tablet */
-  }
-  .main-col {
-    order: 1;
-  }
-}
 
 /* ─── SECTION TITLE ─── */
 .section-title {
@@ -228,7 +211,6 @@ header {
   margin-bottom: 16px;
 }
 .form-row.full { grid-template-columns: 1fr; }
-@media(max-width:500px) { .form-row { grid-template-columns: 1fr; } }
 
 .field { display: flex; flex-direction: column; gap: 6px; }
 label {
@@ -691,18 +673,96 @@ select { cursor: pointer; }
   opacity: 0.4;
 }
 
-/* ─── RESPONSIVE ─── */
-@media(max-width: 860px) {
-  .sidebar {
-    position: static;
-    max-height: none;
-    overflow-y: visible;
-  }
+/* ─── RESPONSIVE — mobile first ─── */
+
+/* Small phones (up to 480px) */
+@media(max-width: 480px) {
+  .header-inner { padding: 12px 16px; }
+  .header-right { display: none; }
+  .logo-name { font-size: 1.05rem; }
+  .logo-sub { font-size: 0.52rem; }
+  .logo-crest { width: 34px; height: 34px; }
+
+  .hero { padding: 28px 16px 24px; }
+  .hero h1 { font-size: 1.7rem; }
+  .hero-sub { font-size: 0.78rem; }
+
+  .page-body { padding: 16px 12px 50px; gap: 16px; }
+  .card { padding: 16px; }
+  .card-title { font-size: 1rem; }
+
+  .form-row { grid-template-columns: 1fr; gap: 12px; }
+
+  .duration-pills { gap: 6px; }
+  .dur-pill { padding: 5px 12px; font-size: 0.75rem; }
+
+  .game-toggle { gap: 8px; }
+  .game-btn { padding: 12px 8px; }
+  .game-btn .game-icon { font-size: 1.2rem; }
+  .game-btn .game-name { font-size: 0.78rem; }
+
+  .pair-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+  .pair-status-tag { font-size: 0.58rem; }
+  .lane-btn { padding: 10px 6px; }
+  .lane-btn .lane-num { font-size: 0.95rem; }
+  .lane-btn .lane-status { font-size: 0.58rem; }
+
+  .modal { padding: 20px; margin: 12px; width: calc(100% - 24px); }
+  .modal-title { font-size: 1.3rem; }
+
+  .summary-card { padding: 20px; }
+  .summary-title { font-size: 1rem; }
+
+  /* bookings table — scroll horizontally on tiny screens */
+  #bookings-card { overflow-x: auto; }
+  .bookings-table { min-width: 520px; }
+}
+
+/* Phones landscape / large phones (481px – 767px) */
+@media(max-width: 767px) and (min-width: 481px) {
+  .header-right { display: none; }
+  .hero { padding: 32px 20px 28px; }
+  .hero h1 { font-size: 2rem; }
+  .page-body { padding: 20px 16px 60px; gap: 20px; }
   .card { padding: 20px; }
-  .modal { padding: 24px; }
-  header { padding: 0; }
-  .hero { padding: 36px 16px 30px; }
-  .page-body { padding: 24px 16px 60px; }
+  .pair-header { flex-wrap: wrap; gap: 4px; }
+  #bookings-card { overflow-x: auto; }
+  .bookings-table { min-width: 520px; }
+}
+
+/* Tablet (768px – 859px) — still single column */
+@media(max-width: 859px) {
+  .page-body {
+    grid-template-columns: 1fr;
+    padding: 24px 20px 60px;
+    gap: 24px;
+  }
+  .main-col { order: 1; }
+  .sidebar {
+    order: 2;
+    position: static; /* no sticky on mobile/tablet — show full after form */
+  }
+  /* on tablet show summary as a condensed row instead of stacked card */
+  .summary-card { padding: 22px; }
+}
+
+/* Desktop (860px+) — two column, sidebar sticky */
+@media(min-width: 860px) {
+  .page-body {
+    grid-template-columns: 1fr 320px;
+    gap: 28px;
+  }
+  .sidebar {
+    position: sticky;
+    top: 84px; /* header height + small gap */
+  }
+  .main-col { order: 1; }
+  .sidebar   { order: 2; }
+}
+
+/* Large desktop (1100px+) */
+@media(min-width: 1100px) {
+  .page-body { grid-template-columns: 1fr 340px; gap: 32px; }
 }
 
 /* ─── FADE IN ─── */
